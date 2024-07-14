@@ -15,10 +15,11 @@ public class WindowsNotificationManager : INotificationManager {
     public event EventHandler<NotificationDismissedEventArgs> NotificationDismissed;
 
     public WindowsNotificationManager(WindowsApplicationContext applicationContext = null) {
+#if WINDOWS10_0_17763_0
         _notificationService = new NotificationService(applicationContext);
-
         _notificationService.NotificationActivated += (_, args) => NotificationActivated?.Invoke(this, args);
         _notificationService.NotificationDismissed += (_, args) => NotificationDismissed?.Invoke(this, args);
+#endif
     }
 
     public void Dispose() => GC.Collect();

@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
 using System.Runtime.Versioning;
 using System.Runtime.InteropServices;
+
+#if WINDOWS10_0_17763_0
 using NotificationsX.Platforms.Windows.Win32;
+#endif
 
 namespace NotificationsX.Platforms.Windows.ApplicationContexts;
 
@@ -19,6 +22,7 @@ public sealed partial record WindowsApplicationContext : ApplicationContext {
     public static WindowsApplicationContext FromCurrentProcess(
         string customName = null,
         string appUserModelId = null) {
+#if WINDOWS10_0_17763_0
         var mainModule = Process.GetCurrentProcess().MainModule;
 
         if (mainModule?.FileName == null) {
@@ -42,5 +46,7 @@ public sealed partial record WindowsApplicationContext : ApplicationContext {
 
         shortcut.Save(shortcutFile);
         return new WindowsApplicationContext(appName, aumid);
+#endif
+        throw new MissingMethodException();
     }
 }
