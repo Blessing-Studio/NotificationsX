@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
 	<PropertyGroup>
-		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>NotificationsX.Platforms.Windows</RootNamespace>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 
@@ -11,14 +13,11 @@
 	<PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
 		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
 	</PropertyGroup>
-
 	<ItemGroup>
-		<Folder Include="Platforms\Linux\ApplicationContexts\" />
-		<Folder Include="Platforms\MacOS\ApplicationContexts\" />
+	  <ProjectReference Include="..\NotificationsX.Base\NotificationsX.Base.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\NotificationsX.Base\NotificationsX.Base.csproj" />
-		<ProjectReference Include="..\NotificationsX.Window\NotificationsX.Window.csproj" />
+		<PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.0.2" />
 	</ItemGroup>
 </Project>
