@@ -12,10 +12,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Platforms\Linux\ApplicationContexts\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\NotificationsX.Base\NotificationsX.Base.csproj" />
 		<ProjectReference Include="..\NotificationsX.Linux\NotificationsX.Linux.csproj" />
 		<ProjectReference Include="..\NotificationsX.MacOS\NotificationsX.MacOS.csproj" />

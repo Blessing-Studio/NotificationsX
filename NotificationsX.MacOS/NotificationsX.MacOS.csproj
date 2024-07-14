@@ -8,10 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="NotificationsX.MacOS.Native\NotificationsX.MacOS.Native.xcodeproj\project.pbxproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NotificationsX.Base\NotificationsX.Base.csproj" />
   </ItemGroup>
 

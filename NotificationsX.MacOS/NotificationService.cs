@@ -1,7 +1,9 @@
 ﻿using NotificationsX.Enums;
 using NotificationsX.EventArgs;
 using NotificationsX.Interfaces;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace NotificationsX.Platforms.MacOS;
 
@@ -21,8 +23,7 @@ public sealed partial class NotificationService : INotificationManager {
     }
 
     public Task ShowNotification(Notification notification, DateTimeOffset? expirationTime = null) {
-        ShowNotification();
-
+        RunScriptProcess(notification);
         return Task.CompletedTask;
     }
 
@@ -35,6 +36,15 @@ public sealed partial class NotificationService : INotificationManager {
         return Task.CompletedTask;
     }
 
-    [LibraryImport("NotificationsX.MacOS.Native.dylib")]
-    private static partial void ShowNotification();
+    private void RunScriptProcess(Notification notification) {
+        StringBuilder stringBuilder = new("-c \"osascript -e 'display notification ");
+        stringBuilder.Append($"\"{notification.Body}\" ");
+        stringBuilder.Append($"with title \"{notification.Title}\"'");
+
+        using Process process = new();
+        process.StartInfo.FileName = "/bin/bash";
+        process.StartInfo.Arguments = "-c \"osascript -e 'display notification \\\"你好，世界！\\\"'\"";
+        process.StartInfo.UseShellExecute = false;
+        process.Start();
+    }
 }
