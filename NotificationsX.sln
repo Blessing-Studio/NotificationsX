@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationsX.Window", "No
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationsX.Console", "NotificationsX.Console\NotificationsX.Console.csproj", "{4A532629-CF81-424C-8258-5342B86D012A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationsX.MacOS", "NotificationsX.MacOS\NotificationsX.MacOS.csproj", "{83F7C729-706C-40D8-96FA-F54188CEA8F1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{4A532629-CF81-424C-8258-5342B86D012A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A532629-CF81-424C-8258-5342B86D012A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A532629-CF81-424C-8258-5342B86D012A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83F7C729-706C-40D8-96FA-F54188CEA8F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83F7C729-706C-40D8-96FA-F54188CEA8F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83F7C729-706C-40D8-96FA-F54188CEA8F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83F7C729-706C-40D8-96FA-F54188CEA8F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

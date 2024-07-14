@@ -1,7 +1,7 @@
 ﻿using NotificationsX;
-using NotificationsX.Platforms.Windows;
+using NotificationsX.Platforms.MacOS;
 
-using WindowsNotificationManager notificationManager = new();
+using MacOSNotificationManager notificationManager = new();
 
 await notificationManager.Initialize();
 
