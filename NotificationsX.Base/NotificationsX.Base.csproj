@@ -5,4 +5,8 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<RootNamespace>NotificationsX</RootNamespace>
 	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Tmds.DBus" Version="0.9.1" />
+	</ItemGroup>
 </Project>

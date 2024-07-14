@@ -17,6 +17,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\NotificationsX.Base\NotificationsX.Base.csproj" />
+		<ProjectReference Include="..\NotificationsX.Linux\NotificationsX.Linux.csproj" />
 		<ProjectReference Include="..\NotificationsX.MacOS\NotificationsX.MacOS.csproj" />
 		<ProjectReference Include="..\NotificationsX.Window\NotificationsX.Window.csproj" />
 	</ItemGroup>
