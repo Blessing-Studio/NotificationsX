@@ -13,6 +13,7 @@
 	<PropertyGroup Condition=" '$(OS)' == 'Windows_NT' ">
 		<TargetFramework>net8.0-windows10.0.17763.0</TargetFramework>
 	</PropertyGroup>
+	
 	<ItemGroup>
 	  <ProjectReference Include="..\NotificationsX.Base\NotificationsX.Base.csproj" />
 	</ItemGroup>

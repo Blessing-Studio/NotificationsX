@@ -15,18 +15,33 @@ namespace NotificationsX.Platforms.Windows;
 public sealed class NotificationService {
     private const int LAUNCH_NOTIFICATION_WATE_MS = 5_000;
 
-#if WINDOWS10_0_17763_0
     private readonly WindowsApplicationContext _applicationContext;
     private readonly TaskCompletionSource<string> _launchActionPromise;
+
+#if WINDOWS10_0_17763_0
+    private readonly ToastNotifierCompat _toastNotifier;
     private readonly Dictionary<ToastNotification, Notification> _notifications;
     private readonly Dictionary<ScheduledToastNotification, Notification> _scheduledNotification;
+#endif
 
-    private readonly ToastNotifierCompat _toastNotifier;
+    public string LaunchActionId { get; }
+
+    public NotificationCapabilities Capabilities => NotificationCapabilities.BodyText |
+    NotificationCapabilities.BodyImages |
+    NotificationCapabilities.Icon |
+    NotificationCapabilities.Audio;
+
+    public event EventHandler<NotificationActivatedEventArgs> NotificationActivated;
+    public event EventHandler<NotificationDismissedEventArgs> NotificationDismissed;
 
     public NotificationService(WindowsApplicationContext applicationContext = null) {
         _applicationContext = applicationContext ?? WindowsApplicationContext.FromCurrentProcess();
         _launchActionPromise = new TaskCompletionSource<string>();
 
+        _notifications = [];
+        _scheduledNotification = [];
+
+#if WINDOWS10_0_17763_0
         if (ToastNotificationManagerCompat.WasCurrentProcessToastActivated()) {
             ToastNotificationManagerCompat.OnActivated += OnAppActivated;
 
@@ -35,26 +50,16 @@ public sealed class NotificationService {
             }
         }
 
-        _notifications = [];
-        _scheduledNotification = [];
         _toastNotifier = ToastNotificationManagerCompat.CreateToastNotifier();
+#endif
     }
-
-    public NotificationCapabilities Capabilities => NotificationCapabilities.BodyText |
-        NotificationCapabilities.BodyImages |
-        NotificationCapabilities.Icon |
-        NotificationCapabilities.Audio;
-
-    public event EventHandler<NotificationActivatedEventArgs> NotificationActivated;
-    public event EventHandler<NotificationDismissedEventArgs> NotificationDismissed;
-
-    public string LaunchActionId { get; }
 
     public static Task Initialize() {
         return Task.CompletedTask;
     }
 
     public Task ShowNotification(Notification notification, DateTimeOffset? expirationTime) {
+#if WINDOWS10_0_17763_0
         if (expirationTime < DateTimeOffset.Now) {
             throw new ArgumentException(null, nameof(expirationTime));
         }
@@ -70,11 +75,12 @@ public sealed class NotificationService {
 
         _toastNotifier.Show(toastNotification);
         _notifications[toastNotification] = notification;
-
+#endif
         return Task.CompletedTask;
     }
 
     public Task HideNotification(Notification notification) {
+#if WINDOWS10_0_17763_0
         if (_notifications.TryGetKey(notification, out var toastNotification)) {
             _toastNotifier.Hide(toastNotification);
         }
@@ -82,6 +88,7 @@ public sealed class NotificationService {
         if (_scheduledNotification.TryGetKey(notification, out var scheduledToastNotification)) {
             _toastNotifier.RemoveFromSchedule(scheduledToastNotification);
         }
+#endif
 
         return Task.CompletedTask;
     }
@@ -90,6 +97,7 @@ public sealed class NotificationService {
         Notification notification,
         DateTimeOffset deliveryTime,
         DateTimeOffset? expirationTime = null) {
+#if WINDOWS10_0_17763_0
         if (deliveryTime < DateTimeOffset.Now || deliveryTime > expirationTime) {
             throw new ArgumentException(nameof(deliveryTime));
         }
@@ -101,6 +109,7 @@ public sealed class NotificationService {
 
         _toastNotifier.AddToSchedule(toastNotification);
         _scheduledNotification[toastNotification] = notification;
+#endif
 
         return Task.CompletedTask;
     }
@@ -109,6 +118,8 @@ public sealed class NotificationService {
         _notifications.Clear();
         _scheduledNotification.Clear();
     }
+
+#if WINDOWS10_0_17763_0
 
     private static XmlDocument GenerateXml(Notification notification) {
         var builder = new ToastContentBuilder();
@@ -171,5 +182,6 @@ public sealed class NotificationService {
             this,
             new NotificationActivatedEventArgs(notification, actionId));
     }
+
 #endif
 }
