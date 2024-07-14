@@ -1,18 +1,21 @@
 ﻿using System.Diagnostics;
 using NotificationsX.Enums;
 using NotificationsX.EventArgs;
-using Windows.UI.Notifications;
 using NotificationsX.Extensions;
-using Microsoft.Toolkit.Uwp.Notifications;
 using NotificationsX.Platforms.Windows.ApplicationContexts;
 
+#if WINDOWS10_0_17763_0
+using Windows.UI.Notifications;
+using Microsoft.Toolkit.Uwp.Notifications;
 using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
+#endif
 
 namespace NotificationsX.Platforms.Windows;
 
 public sealed class NotificationService {
     private const int LAUNCH_NOTIFICATION_WATE_MS = 5_000;
-    
+
+#if WINDOWS10_0_17763_0
     private readonly WindowsApplicationContext _applicationContext;
     private readonly TaskCompletionSource<string> _launchActionPromise;
     private readonly Dictionary<ToastNotification, Notification> _notifications;
@@ -168,4 +171,5 @@ public sealed class NotificationService {
             this,
             new NotificationActivatedEventArgs(notification, actionId));
     }
+#endif
 }
